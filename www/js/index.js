@@ -47,39 +47,30 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
-// display the address information for all contacts
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+var myContact = navigator.contacts.create({"displayName": "The New Contact"});
+var name = new ContactName();
+name.givenName = "نامیا";
+name.familyName = "ویب";
+myContact.name = name;
 
-function onSuccess(contact) {
+var phoneNumbers = [];
+phoneNumbers[0] = new ContactField('work', '09183887641', false);
+phoneNumbers[1] = new ContactField('mobile', '917-555-5432', true); // preferred number
+phoneNumbers[2] = new ContactField('home', '203-555-7890', false);
+myContact.phoneNumbers = phoneNumbers;
+
+myContact.note = "Example note for the newly added contact";
+
+myContact.save(onSuccessCallBack, onErrorCallBack);
+
+function onSuccessCallBack(contact) {
     alert("Save Success");
 };
 
-function onError(contactError) {
+function onErrorCallBack(contactError) {
     alert("Error = " + contactError.code);
 };
+}
 
-// create a new contact object
-var contact = navigator.contacts.create();
-contact.displayName = "Plumber";
-contact.nickname = "Plumber";            // specify both to support all devices
-
-// populate some fields
-var name = new ContactName();
-name.givenName = "Jane";
-name.familyName = "Doe";
-contact.name = name;
-
-// save to device
-contact.save(onSuccess,onError);
-
-  // create a new contact
-    var contact = navigator.contacts.create();
-
-    // store contact phone numbers in ContactField[]
-    var phoneNumbers = [];
-    phoneNumbers[0] = new ContactField('work', '212-555-1234', false);
-    phoneNumbers[1] = new ContactField('mobile', '917-555-5432', true); // preferred number
-    phoneNumbers[2] = new ContactField('home', '203-555-7890', false);
-    contact.phoneNumbers = phoneNumbers;
-
-    // save the contact
-    contact.save();
