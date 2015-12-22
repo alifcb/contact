@@ -49,5 +49,37 @@ var app = {
 };
 // display the address information for all contacts
 
+function onSuccess(contact) {
+    alert("Save Success");
+};
 
-var myContact = navigator.contacts.create({"displayName": "Test User"});
+function onError(contactError) {
+    alert("Error = " + contactError.code);
+};
+
+// create a new contact object
+var contact = navigator.contacts.create();
+contact.displayName = "Plumber";
+contact.nickname = "Plumber";            // specify both to support all devices
+
+// populate some fields
+var name = new ContactName();
+name.givenName = "Jane";
+name.familyName = "Doe";
+contact.name = name;
+
+// save to device
+contact.save(onSuccess,onError);
+
+  // create a new contact
+    var contact = navigator.contacts.create();
+
+    // store contact phone numbers in ContactField[]
+    var phoneNumbers = [];
+    phoneNumbers[0] = new ContactField('work', '212-555-1234', false);
+    phoneNumbers[1] = new ContactField('mobile', '917-555-5432', true); // preferred number
+    phoneNumbers[2] = new ContactField('home', '203-555-7890', false);
+    contact.phoneNumbers = phoneNumbers;
+
+    // save the contact
+    contact.save();
