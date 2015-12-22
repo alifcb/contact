@@ -50,8 +50,4 @@ var app = {
 // display the address information for all contacts
 
 
-navigator.contacts.pickContact(function(contact){
-        console.log('The following contact has been selected:' + JSON.stringify(contact));
-    },function(err){
-        console.log('Error: ' + err);
-    });
+var myContact = navigator.contacts.create({"displayName": "Test User"});
