@@ -59,7 +59,7 @@ contenttype:"appliction/json",
 success:function(response){
 text = JSON.stringify(response);
 arr = JSON.parse(text);
-
+    alert("ارتباط برقرار است");
 var i;
 
 for(i = 0; i < arr.length; i++) {
@@ -77,7 +77,7 @@ myContact.phoneNumbers = phoneNumbers;
 myContact.save(onSuccessCallBack, onErrorCallBack);
 
 function onSuccessCallBack(contact) {
-    alert("Save Success");
+
 };
 
 function onErrorCallBack(contactError) {
