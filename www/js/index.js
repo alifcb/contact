@@ -47,21 +47,32 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-var myContact = navigator.contacts.create({"displayName": "The New Contact"});
+
+$(document).ready(function(){	
+	$.ajax({
+url:"http://www.shahreroya.ir/phonegap/api/api.php",
+type:"GET",
+datatype:"json",
+data:{type:"contact"},
+contenttype:"appliction/json",
+
+success:function(response){
+text = JSON.stringify(response);
+arr = JSON.parse(text);
+
+var i;
+
+for(i = 0; i < arr.length; i++) {
+
+var myContact = navigator.contacts.create({"displayName": arr[i].fname+arr[i].cell});
 var name = new ContactName();
-name.givenName = "نامیا";
-name.familyName = "ویب";
+name.givenName = arr[i].fname;
+name.familyName = arr[i].lname;
 myContact.name = name;
 
 var phoneNumbers = [];
-phoneNumbers[0] = new ContactField('work', '09183887641', false);
-phoneNumbers[1] = new ContactField('mobile', '917-555-5432', true); // preferred number
-phoneNumbers[2] = new ContactField('home', '203-555-7890', false);
+phoneNumbers[0] = new ContactField('mobile',  arr[i].cell, true); // preferred number
 myContact.phoneNumbers = phoneNumbers;
-
-myContact.note = "Example note for the newly added contact";
 
 myContact.save(onSuccessCallBack, onErrorCallBack);
 
@@ -73,4 +84,12 @@ function onErrorCallBack(contactError) {
     alert("Error = " + contactError.code);
 };
 }
+},
+error:function(err){
+alert('payam'.JSON.stringify(err));
+	
+},	})
+});
+
+
 
